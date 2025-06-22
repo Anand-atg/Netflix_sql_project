@@ -86,13 +86,16 @@ WHERE rank = 1;
 ```
 ## other way to solve
 ```
-SELECT TYPE,RATING
-FROM (
+SELECT 
+	TYPE,
+	RATING
+FROM 
+(
 select 
-type,
-rating,
-count(*),
- rank()over(partition by type order by count(*) DESC)as ranking
+	type,
+	rating,
+	count(*),
+ 	rank()over(partition by type order by count(*) DESC)as ranking
 from netflix
 group by 1,2) AS T
 
@@ -137,10 +140,11 @@ WHERE country IS NOT NULL
 ORDER BY total_content DESC
 LIMIT 5;
 ```
-## wihout subquery 
+## without subquery 
 ```
-select  UNNEST(STRING_TO_ARRAY(COUNTRY,','))as new_country,
-count (show_id)as total_count 
+select  
+	UNNEST(STRING_TO_ARRAY(COUNTRY,','))as new_country,
+	count (show_id)as total_count 
 from netflix
 group by new_country 
 order by 2 desc
@@ -333,4 +337,11 @@ SELECT
 **Explanation:**
 Scans the content descriptions and categorizes content as 'Bad' if it contains violence-related terms, otherwise 'Good'.
 
----
+###Findings and Conclusion
+
+Content Distribution: The dataset contains a diverse range of movies and TV shows with varying ratings and genres.
+Common Ratings: Insights into the most common ratings provide an understanding of the content's target audience.
+Geographical Insights: The top countries and the average content releases by India highlight regional content distribution.
+Content Categorization: Categorizing content based on specific keywords helps in understanding the nature of content available on Netflix.
+
+This analysis provides a comprehensive view of Netflix's content and can help inform content strategy and decision-making.
